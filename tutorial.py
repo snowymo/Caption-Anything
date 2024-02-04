@@ -24,6 +24,14 @@ import sys
 sys.path.append("../transformers")
 sys.path.append("../segment-anything")
 
+def save_img(masks,name):
+    # 将 masks 的值域从 [0, 1] 转换为 [0, 255] 并转换为整数
+    masks_scaled = (masks * 255).astype(np.uint8)
+    # 将缩放后的数组转换为图像
+    img = Image.fromarray(masks_scaled)
+    # 保存图像
+    img.save(name)
+
 """## Load image
 
 Let's load the image from the Meta AI's [Segment Anything Demo](https://segment-anything.com/demo) or from local device.
@@ -86,15 +94,10 @@ masks, scores, logits = predictor.predict(point_coords = input_point, point_labe
 masks = masks[0, ...]
 
 # display(Image.fromarray(masks).resize(((width // 3, height // 3))))
-mask = Image.fromarray(masks)
-def save_img(masks,name):
-    # 将 masks 的值域从 [0, 1] 转换为 [0, 255] 并转换为整数
-    masks_scaled = (masks * 255).astype(np.uint8)
-    # 将缩放后的数组转换为图像
-    img = Image.fromarray(masks_scaled)
-    # 保存图像
-    img.save(name)
-save_img(mask,'mask.png')
+save_img(masks,'mask.png')
+# mask = Image.fromarray(masks)
+
+
 
 """## Crop the image
 
@@ -110,8 +113,9 @@ if crop_mode == "wo_bg":
     masked_image = np.uint8(masked_image)
 else:
     masked_image = np.array(image)
-masked_image = Image.fromarray(masked_image)
+
 save_img(masked_image,'masked_image.png')
+masked_image = Image.fromarray(masked_image)
 
 # display(masked_image.resize((width // 3, height // 3)))
 
