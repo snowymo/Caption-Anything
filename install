@@ -2,4 +2,4 @@ conda create -n py38 python=3.8
 pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
 pip install transformers
 pip install accelerate
-pip install C:\Users\snowy\Projects\bitsandbytes-windows\
+pip install git+https://github.com/Keith-Hon/bitsandbytes-windows.git
